@@ -10,7 +10,6 @@ public class Brokerage implements Login
     private Set<Trader> loggedTraders;
     private StockExchange exchange;
 
-    // TODO complete class
 
     
     //
