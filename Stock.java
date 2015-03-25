@@ -47,20 +47,62 @@ public class Stock
             + volume + "\nAsk: ";
         if ( !sellOrders.isEmpty() )
         {
-            double smallSell = -1.0;
+            TradeOrder smallSell = null;
             for ( TradeOrder a : sellOrders )
             {
-                if ( smallSell < 0
-                    || ( a.isLimit() && a.getPrice() < smallSell ) )
+                if ( a.isLimit()
+                    && ( smallSell == null || a.getPrice() < smallSell.getPrice() ) )
                 {
-
+                    smallSell = a;
+                }
+                else if ( smallSell == null || lastPrice < smallSell.getPrice() )
+                {
+                    smallSell = a;
                 }
             }
-            // msg = msg.concat();
+            if ( smallSell.isLimit() )
+            {
+                msg = msg.concat( smallSell.getPrice() + "  " );
+            }
+            else
+            {
+                msg = msg.concat( lastPrice + "  " );
+            }
+            msg = msg.concat( smallSell.getShares() + "  " );
         }
         else
         {
             msg = msg.concat( "none  " );
+        }
+
+        if ( !buyOrders.isEmpty() )
+        {
+            TradeOrder largeBuy = null;
+            for ( TradeOrder a : buyOrders )
+            {
+                if ( a.isLimit()
+                    && ( largeBuy == null || a.getPrice() > largeBuy.getPrice() ) )
+                {
+                    largeBuy = a;
+                }
+                else if ( largeBuy == null || lastPrice > largeBuy.getPrice() )
+                {
+                    largeBuy = a;
+                }
+            }
+            if ( largeBuy.isLimit() )
+            {
+                msg = msg.concat( largeBuy.getPrice() + "  " );
+            }
+            else
+            {
+                msg = msg.concat( lastPrice + "  " );
+            }
+            msg = msg.concat( "" + largeBuy.getShares() );
+        }
+        else
+        {
+            msg = msg.concat( "none" );
         }
         return msg;
     }
