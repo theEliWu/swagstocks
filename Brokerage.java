@@ -14,9 +14,11 @@ public class Brokerage implements Login
     private StockExchange exchange;
 
 
-    Brokerage( StockExchange exchange )
+    public Brokerage( StockExchange exchange )
     {
         this.exchange = exchange;
+        traders = new TreeMap<String, Trader>();
+        loggedTraders = new TreeSet<Trader>();
     }
 
 
@@ -53,7 +55,7 @@ public class Brokerage implements Login
     {
         Trader temp = traders.get( name );
 
-        if ( !traders.containsValue( name ) )
+        if ( !traders.containsKey( name ) )
         {
             return -1;
         }
