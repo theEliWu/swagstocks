@@ -30,6 +30,7 @@ public class Stock
         hiPrice = price;
         volume = 0;
         buyOrders = new PriorityQueue<TradeOrder>();
+        PriceComparator buyComp = new PriceComparator();
         sellOrders = new PriorityQueue<TradeOrder>();
     }
 
