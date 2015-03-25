@@ -58,6 +58,7 @@ public class Brokerage implements Login
         else if ( loggedTraders.contains( temp ));
         {
             return -3;
+            
         }
         else
         {
