@@ -1,84 +1,93 @@
 import java.lang.reflect.*;
 import java.util.*;
 
+
 /**
  * Represents a brokerage.
  */
 public class Brokerage implements Login
 {
     private Map<String, Trader> traders;
+
     private Set<Trader> loggedTraders;
+
     private StockExchange exchange;
 
-    Brokerage(StockExchange exchange)
+
+    Brokerage( StockExchange exchange )
     {
         this.exchange = exchange;
     }
-    
-    public int addUser(String name, String psw)
+
+
+    public int addUser( String name, String psw )
     {
-        if( name.length() < 4 || name.length() > 10 )
+        if ( name.length() < 4 || name.length() > 10 )
         {
             return -1;
         }
-        else if( psw.length() < 2 || psw.length() > 10 )
+        else if ( psw.length() < 2 || psw.length() > 10 )
         {
             return -2;
         }
-        else if( traders.containsKey(name) )
+        else if ( traders.containsKey( name ) )
         {
             return -3;
         }
         else
         {
-            Trader tradeUser = new Trader( this ,name, psw);
+            Trader tradeUser = new Trader( this, name, psw );
             traders.put( name, tradeUser );
             return 0;
         }
     }
-    
-  
-    public void getQuote(String symbol, Trader trader)
+
+
+    public void getQuote( String symbol, Trader trader )
     {
-        trader.receiveMessage( exchange.getQuote(symbol));
+        trader.receiveMessage( exchange.getQuote( symbol ) );
     }
-   
-    public int login(String name, String psw)
+
+
+    public int login( String name, String psw )
     {
         Trader temp = traders.get( name );
-        
-        if( !traders.containsValue( name ))
+
+        if ( !traders.containsValue( name ) )
         {
             return -1;
         }
-        else if( !temp.getPassword().equals(psw));
+        else if ( !temp.getPassword().equals( psw ) )
         {
             return -2;
         }
-        else if ( loggedTraders.contains( temp ));
+        else if ( loggedTraders.contains( temp ) )
         {
             return -3;
-            
+
         }
         else
         {
-            temp.receieveMessage( "Welcome to SafeTrade!" );
+            temp.receiveMessage( "Welcome to SafeTrade!" );
             temp.openWindow();
             loggedTraders.add( temp );
             return 0;
         }
     }
-   
-    public void logout(Trader trader)
+
+
+    public void logout( Trader trader )
     {
         loggedTraders.remove( trader );
     }
 
-    public void placeOrder( TradeOrder order)
+
+    public void placeOrder( TradeOrder order )
     {
-        exchange.placeOrder(order);
+        exchange.placeOrder( order );
     }
-    
+
+
     //
     // The following are for test purposes only
     //
@@ -87,15 +96,18 @@ public class Brokerage implements Login
         return traders;
     }
 
+
     protected Set<Trader> getLoggedTraders()
     {
         return loggedTraders;
     }
 
+
     protected StockExchange getExchange()
     {
         return exchange;
     }
+
 
     /**
      * <p>

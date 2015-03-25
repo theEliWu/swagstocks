@@ -16,6 +16,15 @@ public class Trader implements Comparable<Trader>
     private Queue<String> mailbox;
 
 
+    public Trader( Brokerage brokerage, String name, String pswd )
+    {
+        this.brokerage = brokerage;
+        screenName = name;
+        password = pswd;
+        mailbox = new LinkedList<String>();
+    }
+
+
     public int compareTo( Trader other )
     {
         return screenName.toUpperCase().compareTo( other.getName()
@@ -71,8 +80,8 @@ public class Trader implements Comparable<Trader>
         brokerage.logout( this );
         myWindow = null;
     }
-    
-    
+
+
     public void receiveMessage( String msg )
     {
         mailbox.add( msg );

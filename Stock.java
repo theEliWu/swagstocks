@@ -21,6 +21,19 @@ public class Stock
     private PriorityQueue<TradeOrder> buyOrders, sellOrders;
 
 
+    public Stock( String symbol, String name, double price )
+    {
+        stockSymbol = symbol;
+        companyName = name;
+        lastPrice = price;
+        loPrice = price;
+        hiPrice = price;
+        volume = 0;
+        buyOrders = new PriorityQueue<TradeOrder>();
+        sellOrders = new PriorityQueue<TradeOrder>();
+    }
+
+
     protected void excecuteOrders()
     {
 
@@ -29,7 +42,27 @@ public class Stock
 
     public String getQuote()
     {
-        return null;
+        String msg = companyName + " (" + stockSymbol + ")\nPrice: "
+            + lastPrice + "  hi: " + hiPrice + "  lo: " + loPrice + "  vol: "
+            + volume + "\nAsk: ";
+        if ( !sellOrders.isEmpty() )
+        {
+            double smallSell = -1.0;
+            for ( TradeOrder a : sellOrders )
+            {
+                if ( smallSell < 0
+                    || ( a.isLimit() && a.getPrice() < smallSell ) )
+                {
+
+                }
+            }
+            // msg = msg.concat();
+        }
+        else
+        {
+            msg = msg.concat( "none  " );
+        }
+        return msg;
     }
 
 
