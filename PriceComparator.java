@@ -3,14 +3,33 @@
  */
 public class PriceComparator implements java.util.Comparator<TradeOrder>
 {
-    public int compare( TradeOrder t1, TradeOrder t2 ) {
-        return (int)  (t1.getShares()*t1.getPrice() 
-                        - t2.getPrice()*t2.getShares() );
+    private boolean asc;
+    
+    public PriceComparator() {
+        super();
+        asc = true;
+    }
+    
+    public PriceComparator( Boolean asc ) {
+        super();
+        this.asc = asc;
     }
     
     @Override
-    public boolean equals( Object obj ) {
-        obj.
+    public int compare( TradeOrder t1, TradeOrder t2 ) {
+        if ( t1.isMarket() && t2.isMarket() )
+            return 0;
+        else if ( t1.isMarket() && t2.isLimit() )
+            return -1;
+        else if ( t1.isLimit() && t2.isMarket() )
+            return 1;
+        else {
+            int t1PriceCents = (int) t1.getPrice() * 100;
+            int t2PriceCents = (int) t2.getPrice() * 100;
+            int compared = t1PriceCents - t2PriceCents;
+            if ( !asc )
+                compared *= -1;
+            return compared;
+        }
     }
-    
 }
