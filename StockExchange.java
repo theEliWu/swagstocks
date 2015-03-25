@@ -6,7 +6,14 @@ import java.util.*;
  * Represents a stock exchange. A <code>StockExchange</code> keeps a
  * <code>HashMap</code> of stocks, keyed by a stock symbol. It has methods to
  * list a new stock, request a quote for a given stock symbol, and to place a
- * specified trade order.
+ * specified tradse order.
+ *
+ *  @author  Eric Zeng
+ *  @version Mar 23, 2015
+ *  @author  Period: 6
+ *  @author  Assignment: swagstocks
+ *
+ *  @author  Sources: None
  */
 public class StockExchange
 {
@@ -17,25 +24,27 @@ public class StockExchange
     {
         listedStocks = new HashMap<String, Stock>();
     }
-    
-    
-    public void listStock(String symbol, String name, double price)
+
+
+    public void listStock( String symbol, String name, double price )
     {
-        Stock add = new Stock(symbol, name, price);
+        Stock add = new Stock( symbol, name, price );
         listedStocks.put( symbol, add );
     }
-    
-    
-    public String getQuote( String symbol)
+
+
+    public String getQuote( String symbol )
     {
         return listedStocks.get( symbol ).getQuote();
     }
-    
+
+
     public void placeOrder( TradeOrder order )
     {
         listedStocks.get( order.getSymbol() ).placeOrder( order );
     }
-    
+
+
     //
     // The following are for test purposes only
     //

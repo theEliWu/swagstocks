@@ -36,49 +36,61 @@ public class TradeOrder
         this.price = price;
     }
 
-    
+
     public double getPrice()
     {
         return price;
     }
-    
-    
+
+
     public int getShares()
     {
         return numShares;
     }
-    
-    
+
+
     public String getSymbol()
     {
         return symbol;
     }
 
-    
+
     public Trader getTrader()
     {
         return trader;
     }
-    
-    
+
+
     public boolean isBuy()
     {
         return buyOrder;
     }
-    
-    
+
+
+    public boolean isLimit()
+    {
+        return !marketOrder;
+    }
+
+
     public boolean isMarket()
     {
         return marketOrder;
     }
-    
-    
+
+
     public boolean isSell()
     {
         return !buyOrder;
     }
-    
-    public 
+
+
+    public void subtractShares( int shares )
+    {
+        numShares = -shares;
+    }
+
+
     //
     // The following are for test purposes only
     //
