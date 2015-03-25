@@ -23,20 +23,43 @@ public class Stock
 
     protected void excecuteOrders()
     {
-        
+
     }
-    
-    
+
+
     public String getQuote()
     {
-        
+        return null;
     }
-    
-    
+
+
     public void placeOrder( TradeOrder order )
     {
-        
+        String msg = "New Order:  ";
+        if ( order.isBuy() )
+        {
+            buyOrders.add( order );
+            msg = msg.concat( "Buy " );
+        }
+        else
+        {
+            sellOrders.add( order );
+            msg = msg.concat( "Sell " );
+        }
+        msg = msg.concat( order.getSymbol() + " (" + companyName + ")\n"
+            + order.getShares() + " shares at " );
+        if ( order.isMarket() )
+        {
+            msg = msg.concat( "market" );
+        }
+        else
+        {
+            msg = msg.concat( Double.toString( order.getPrice() ) );
+        }
+
+        order.getTrader().receiveMessage( msg );
     }
+
 
     //
     // The following are for test purposes only
