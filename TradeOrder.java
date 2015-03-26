@@ -87,7 +87,11 @@ public class TradeOrder
 
     public void subtractShares( int shares )
     {
-        numShares = -shares;
+        if ( shares > numShares )
+        {
+            throw new IllegalArgumentException();
+        }
+        numShares -= shares;
     }
 
 
