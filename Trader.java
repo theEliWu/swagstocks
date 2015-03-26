@@ -57,7 +57,7 @@ public class Trader implements Comparable<Trader>
     }
 
 
-    public boolean hasMessage()
+    public boolean hasMessages()
     {
         return !mailbox.isEmpty();
     }

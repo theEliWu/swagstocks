@@ -29,13 +29,14 @@ public class Stock
         loPrice = price;
         hiPrice = price;
         volume = 0;
-        buyOrders = new PriorityQueue<TradeOrder>();
         PriceComparator buyComp = new PriceComparator();
-        sellOrders = new PriorityQueue<TradeOrder>();
+        buyOrders = new PriorityQueue<TradeOrder>( new PriceComparator() );
+        PriceComparator sellComp = new PriceComparator();
+        sellOrders = new PriorityQueue<TradeOrder>( new PriceComparator() );
     }
 
 
-    protected void excecuteOrders()
+    protected void executeOrders()
     {
 
     }
@@ -63,17 +64,17 @@ public class Stock
             }
             if ( smallSell.isLimit() )
             {
-                msg = msg.concat( smallSell.getPrice() + "  " );
+                msg = msg.concat( smallSell.getPrice() + " " );
             }
             else
             {
-                msg = msg.concat( lastPrice + "  " );
+                msg = msg.concat( lastPrice + " " );
             }
-            msg = msg.concat( smallSell.getShares() + "  " );
+            msg = msg.concat( "size: " + smallSell.getShares() + "  Bid: " );
         }
         else
         {
-            msg = msg.concat( "none  " );
+            msg = msg.concat( "none  Bid: " );
         }
 
         if ( !buyOrders.isEmpty() )
@@ -93,13 +94,13 @@ public class Stock
             }
             if ( largeBuy.isLimit() )
             {
-                msg = msg.concat( largeBuy.getPrice() + "  " );
+                msg = msg.concat( largeBuy.getPrice() + " " );
             }
             else
             {
-                msg = msg.concat( lastPrice + "  " );
+                msg = msg.concat( lastPrice + " " );
             }
-            msg = msg.concat( "" + largeBuy.getShares() );
+            msg = msg.concat( "size: " + largeBuy.getShares() );
         }
         else
         {
