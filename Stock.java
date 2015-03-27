@@ -38,7 +38,55 @@ public class Stock
 
     protected void executeOrders()
     {
+        TradeOrder topBuy = buyOrders.peek();
+        TradeOrder topSell = sellOrders.peek();
 
+        TradeOrder oldTopBuy = topBuy;
+        TradeOrder oldTopSell = topSell;
+        int oldNumBuyOrders = buyOrders.size();
+        int oldNumSellOrders = sellOrders.size();
+
+        double tradePrice;
+        if ( topBuy.isLimit() && topSell.isLimit()
+            && topBuy.getPrice() <= topSell.getPrice() )
+        {
+            tradePrice = topSell.getPrice();
+        }
+        else if ( topBuy.isLimit() && topSell.isMarket() )
+        {
+            tradePrice = topBuy.getPrice();
+        }
+        else if ( topBuy.isMarket() && topSell.isLimit() )
+        {
+            tradePrice = topSell.getPrice();
+        }
+        else
+        {
+            tradePrice = lastPrice;
+        }
+        int tradeShares = Math.min( topBuy.getShares(), topSell.getShares() );
+        topBuy.subtractShares( tradeShares );
+        topSell.subtractShares( tradeShares );
+        if ( topBuy.getShares() == 0 )
+            buyOrders.remove();
+        if ( topSell.getShares() == 0 )
+            sellOrders.remove();
+
+        if ( tradePrice > hiPrice )
+            hiPrice = tradePrice;
+        if ( tradePrice < loPrice )
+            loPrice = tradePrice;
+        volume += tradeShares;
+        double amt = tradeShares * tradePrice;
+        topBuy.getTrader().receiveMessage( "You bought: " + tradeShares
+            + " at " + money.format( tradePrice ) + " amt "
+            + money.format( amt ) );
+        if ( oldTopBuy != buyOrders.peek() || oldTopSell != sellOrders.peek()
+            || oldNumBuyOrders != buyOrders.size()
+            || oldNumSellOrders != sellOrders.size() )
+        {
+            executeOrders();
+        }
     }
 
 
