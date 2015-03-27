@@ -221,7 +221,10 @@ public class JUSafeTradeTest
     @Test
     public void traderWinConst()
     {
-        TraderWindow tw = new TraderWindow( null );
+        TraderWindow tw = new TraderWindow( new Trader( new Brokerage( 
+            new StockExchange() ),
+            "tester",
+            "check" ) );
         assertNotNull( tw );
     }
 
@@ -229,7 +232,10 @@ public class JUSafeTradeTest
     @Test
     public void traderWinShowMsg()
     {
-        TraderWindow tw = new TraderWindow( null );
+        TraderWindow tw = new TraderWindow( new Trader( new Brokerage( 
+            new StockExchange() ),
+            "tester",
+            "check" ) );
         assertNotNull( tw );
         tw.showMessage( null );
     }
@@ -375,7 +381,7 @@ public class JUSafeTradeTest
         Stock stk = new Stock( symbol, "test", price );
         assertEquals( stk.getQuote(), "test (" + symbol + ")\nPrice: " + price
             + "  hi: " + price + "  lo: " + price
-            + "  vol: 0\nAsk: none Bid: none" );
+            + "  vol: 0\nAsk: none  Bid: none" );
     }
 
 
