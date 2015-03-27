@@ -29,10 +29,8 @@ public class Stock
         loPrice = price;
         hiPrice = price;
         volume = 0;
-        PriceComparator buyComp = new PriceComparator();
-        buyOrders = new PriorityQueue<TradeOrder>( new PriceComparator() );
-        PriceComparator sellComp = new PriceComparator();
-        sellOrders = new PriorityQueue<TradeOrder>( new PriceComparator() );
+        buyOrders = new PriorityQueue<TradeOrder>( 1, new PriceComparator() );
+        sellOrders = new PriorityQueue<TradeOrder>( 1, new PriceComparator() );
     }
 
 
