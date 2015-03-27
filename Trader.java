@@ -87,9 +87,9 @@ public class Trader implements Comparable<Trader>
         mailbox.add( msg );
         if ( myWindow != null )
         {
-            for ( String m : mailbox )
+            while ( !mailbox.isEmpty())
             {
-                myWindow.showMessage( m );
+                myWindow.showMessage( mailbox.remove() );
             }
         }
     }

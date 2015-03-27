@@ -29,7 +29,7 @@ public class TradeOrder
         double price )
     {
         this.trader = trader;
-        this.symbol = symbol;
+        this.symbol = symbol.toUpperCase().trim();
         this.buyOrder = buyOrder;
         this.marketOrder = marketOrder;
         this.numShares = numShares;

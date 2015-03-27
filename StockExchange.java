@@ -8,12 +8,12 @@ import java.util.*;
  * list a new stock, request a quote for a given stock symbol, and to place a
  * specified tradse order.
  *
- *  @author  Eric Zeng
- *  @version Mar 23, 2015
- *  @author  Period: 6
- *  @author  Assignment: swagstocks
+ * @author Eric Zeng
+ * @version Mar 23, 2015
+ * @author Period: 6
+ * @author Assignment: swagstocks
  *
- *  @author  Sources: None
+ * @author Sources: None
  */
 public class StockExchange
 {
@@ -35,13 +35,26 @@ public class StockExchange
 
     public String getQuote( String symbol )
     {
-        return listedStocks.get( symbol ).getQuote();
+        Stock quote = listedStocks.get( symbol );
+        if ( quote == null )
+        {
+            return symbol + " notfound";
+        }
+        return quote.getQuote();
     }
 
 
     public void placeOrder( TradeOrder order )
     {
-        listedStocks.get( order.getSymbol() ).placeOrder( order );
+        Stock place = listedStocks.get( order.getSymbol() );
+        if ( place == null )
+        {
+            order.getTrader().receiveMessage( order.getSymbol() + " not found" );
+        }
+        else
+        {
+            place.placeOrder( order );
+        }
     }
 
 
