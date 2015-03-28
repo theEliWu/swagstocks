@@ -513,8 +513,8 @@ public class JUSafeTradeTest
     public void executeStockOrders()
     {
         StockExchange ex = new StockExchange();
-        Brokerage b = new Brokerage( ex );
         ex.listStock( symbol, "test", price );
+        Brokerage b = new Brokerage( ex );
         Trader alpha = new Trader( b, "tester", "check" );
         Trader beta = new Trader( b, "tester", "check" );
         ex.getListedStocks()
