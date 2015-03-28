@@ -221,8 +221,7 @@ public class JUSafeTradeTest
     @Test
     public void traderWinConst()
     {
-        TraderWindow tw = new TraderWindow( new Trader( new Brokerage( 
-            new StockExchange() ),
+        TraderWindow tw = new TraderWindow( new Trader( new Brokerage( new StockExchange() ),
             "tester",
             "check" ) );
         assertNotNull( tw );
@@ -232,8 +231,7 @@ public class JUSafeTradeTest
     @Test
     public void traderWinShowMsg()
     {
-        TraderWindow tw = new TraderWindow( new Trader( new Brokerage( 
-            new StockExchange() ),
+        TraderWindow tw = new TraderWindow( new Trader( new Brokerage( new StockExchange() ),
             "tester",
             "check" ) );
         assertNotNull( tw );
@@ -270,7 +268,91 @@ public class JUSafeTradeTest
 
 
     // --Test Trader
-    
+    @Test
+    public void traderCompare()
+    {
+        Trader t = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        Trader r = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        assertEquals( t.compareTo( r ), 0 );
+
+        r = new Trader( new Brokerage( new StockExchange() ),
+            "Atester",
+            "check" );
+        assertEquals( t.compareTo( r ), 19 );
+
+        r = new Trader( new Brokerage( new StockExchange() ),
+            "Ztester",
+            "check" );
+        assertEquals( t.compareTo( r ), -6 );
+    }
+
+
+    @Test
+    public void traderEquals()
+    {
+        Trader t = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        Trader r = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        assertTrue( t.equals( r ) );
+    }
+
+
+    @Test
+    public void traderGetQuote()
+    {
+        Trader t = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        t.getQuote( symbol );
+        assertTrue( !t.mailbox().isEmpty() );
+    }
+
+
+    @Test
+    public void traderWindow()
+    {
+        Trader t = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        t.openWindow();
+        assertNotNull( t.toString() );
+    }
+
+
+    @Test
+    public void traderPlaceOrder()
+    {
+        Trader t = new Trader( new Brokerage( new StockExchange() ),
+            "tester",
+            "check" );
+        t.placeOrder( new TradeOrder( t,
+            symbol,
+            buyOrder,
+            marketOrder,
+            numShares,
+            price ) );
+        assertTrue( !t.mailbox().isEmpty() );
+    }
+
+
+    @Test
+    public void traderQuit()
+    {
+        Brokerage b = new Brokerage( new StockExchange() );
+        Trader t = new Trader( b, "tester", "check" );
+        t.quit();
+        assertTrue( !b.getLoggedTraders().contains( t ) );
+
+    }
+
+
     @Test
     public void traderGetName()
     {
@@ -357,7 +439,6 @@ public class JUSafeTradeTest
     public void StockExPlaceOrder()
     {
         StockExchange ex = new StockExchange();
-        Stock stk = new Stock( symbol, "tester", price );
         ex.listStock( symbol, "tester", price );
         Brokerage b = new Brokerage( ex );
         Trader tester = new Trader( b, "tester", "test" );
@@ -369,8 +450,19 @@ public class JUSafeTradeTest
             price );
         ex.placeOrder( check );
 
-        assertFalse( stk.getBuyOrders().isEmpty() );
+        assertFalse( ex.getListedStocks()
+            .get( symbol )
+            .getBuyOrders()
+            .isEmpty() );
         assertTrue( tester.hasMessages() );
+    }
+
+
+    @Test
+    public void StockExToString()
+    {
+        StockExchange ex = new StockExchange();
+        assertNotNull( ex.toString() );
     }
 
 
@@ -405,6 +497,7 @@ public class JUSafeTradeTest
         assertTrue( tester.hasMessages() );
 
     }
+    
 
     // Remove block comment below to run JUnit test in console
     /*
