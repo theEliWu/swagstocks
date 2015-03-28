@@ -239,7 +239,7 @@ public class JUSafeTradeTest
     }
 
 
-    // --Test PriceComparator (TODO NOT DONE)
+    // --Test PriceComparator
 
     @Test
     public void priceCompare()
@@ -396,6 +396,7 @@ public class JUSafeTradeTest
 
     // --Test Brokerage
 
+    @Test
     public void brokerageAddUser()
     {
         Brokerage t = new Brokerage( new StockExchange() );
@@ -404,6 +405,7 @@ public class JUSafeTradeTest
     }
 
 
+    @Test
     public void brokerageLogin()
     {
         Brokerage t = new Brokerage( new StockExchange() );
@@ -411,6 +413,14 @@ public class JUSafeTradeTest
         assertEquals( t.login( "tester", "check" ), 0 );
         assertTrue( t.getLoggedTraders().contains( t.getTraders()
             .get( "tester" ) ) );
+    }
+
+
+    @Test
+    public void borkerageToString()
+    {
+        Brokerage t = new Brokerage( new StockExchange() );
+        assertNotNull( t.toString() );
     }
 
 
@@ -497,7 +507,45 @@ public class JUSafeTradeTest
         assertTrue( tester.hasMessages() );
 
     }
-    
+
+
+    @Test
+    public void executeStockOrders()
+    {
+        StockExchange ex = new StockExchange();
+        Brokerage b = new Brokerage( ex );
+        ex.listStock( symbol, "test", price );
+        Trader alpha = new Trader( b, "tester", "check" );
+        Trader beta = new Trader( b, "tester", "check" );
+        ex.getListedStocks()
+            .get( symbol )
+            .getBuyOrders()
+            .add( new TradeOrder( alpha,
+                symbol,
+                buyOrder,
+                marketOrder,
+                numShares,
+                price ) );
+        ex.getListedStocks()
+            .get( symbol )
+            .getSellOrders()
+            .add( new TradeOrder( beta,
+                symbol,
+                buyOrder,
+                marketOrder,
+                numShares,
+                price ) );
+        ex.getListedStocks().get( symbol ).executeOrders();
+        assertTrue( alpha.hasMessages() && beta.hasMessages() );
+    }
+
+
+    @Test
+    public void stockToString()
+    {
+        Stock test = new Stock( symbol, "test", price );
+        assertNotNull( test.toString() );
+    }
 
     // Remove block comment below to run JUnit test in console
     /*
