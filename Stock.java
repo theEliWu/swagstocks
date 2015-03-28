@@ -86,7 +86,6 @@ public class Stock
         }
     }
 
-
     public String getQuote()
     {
         String msg = companyName + " (" + stockSymbol + ")\nPrice: "
