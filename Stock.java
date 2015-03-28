@@ -186,6 +186,7 @@ public class Stock
         }
 
         order.getTrader().receiveMessage( msg );
+        executeOrders();
     }
 
 
