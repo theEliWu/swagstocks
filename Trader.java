@@ -66,6 +66,10 @@ public class Trader implements Comparable<Trader>
     public void openWindow()
     {
         myWindow = new TraderWindow( this );
+        while ( !mailbox.isEmpty() )
+        {
+            myWindow.showMessage( mailbox.remove() );
+        }
     }
 
 
@@ -87,7 +91,7 @@ public class Trader implements Comparable<Trader>
         mailbox.add( msg );
         if ( myWindow != null )
         {
-            while ( !mailbox.isEmpty())
+            while ( !mailbox.isEmpty() )
             {
                 myWindow.showMessage( mailbox.remove() );
             }
