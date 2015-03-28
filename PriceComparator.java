@@ -6,12 +6,10 @@ public class PriceComparator implements java.util.Comparator<TradeOrder>
     private boolean asc;
     
     public PriceComparator() {
-        super();
         asc = true;
     }
     
     public PriceComparator( Boolean ascending ) {
-        super();
         asc = ascending;
     }
     
@@ -24,12 +22,10 @@ public class PriceComparator implements java.util.Comparator<TradeOrder>
         else if ( t1.isLimit() && t2.isMarket() )
             return 1;
         else {
-            int t1PriceCents = (int) t1.getPrice() * 100;
-            int t2PriceCents = (int) t2.getPrice() * 100;
-            int compared = t1PriceCents - t2PriceCents;
-            if ( !asc )
-                compared *= -1;
-            return compared;
+            if ( asc == true )
+                return (int)( t1.getPrice() - t2.getPrice() );
+            else
+                return (int)( t2.getPrice() - t1.getPrice() );
         }
     }
 }
