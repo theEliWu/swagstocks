@@ -10,9 +10,9 @@ public class PriceComparator implements java.util.Comparator<TradeOrder>
         asc = true;
     }
     
-    public PriceComparator( Boolean asc ) {
+    public PriceComparator( Boolean ascending ) {
         super();
-        this.asc = asc;
+        asc = ascending;
     }
     
     @Override
