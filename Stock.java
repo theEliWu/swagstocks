@@ -81,6 +81,10 @@ public class Stock
         topBuy.getTrader().receiveMessage( "You bought: " + tradeShares
             + " at " + money.format( tradePrice ) + " amt "
             + money.format( amt ) );
+        topSell.getTrader().receiveMessage( "You sold: " + tradeShares
+            + " at " + money.format( tradePrice ) + " amt "
+            + money.format( amt ) );
+        
         if ( oldTopBuy != buyOrders.peek() || oldTopSell != sellOrders.peek()
             || oldNumBuyOrders != buyOrders.size()
             || oldNumSellOrders != sellOrders.size() )
